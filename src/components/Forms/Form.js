@@ -18,9 +18,9 @@ export class Form extends Component {
 // функции обработчики событий
 
   handleCheck = (e) => {
-    console.log(e.target.name);
-    console.log(e.target.value);
-    console.log(e.target.checked);
+    // console.log(e.target.name);
+    // console.log(e.target.value);
+    // console.log(e.target.checked);
   
     this.setState({
       agreed: !this.state.agreed,
@@ -45,8 +45,9 @@ export class Form extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const obj = {
+      id: uuid(),
       title: this.state.title,
-      description: this.state.desc,
+      desc: this.state.desc,
       size: this.state.size,
     }
 
@@ -56,27 +57,29 @@ export class Form extends Component {
   };
   
   resetForm = () => {
-    // this.setState({
-    //   title: '',
-    //   desc: '',
-    //   size: '',
-    //   agreed: false,
-    // })
+    this.setState({
+      title: '',
+      desc: '',
+      size: '',
+      agreed: false,
+    })
     // распыляем дефолтное состояние стэйта
-    this.setState({...this.state})
+    // this.setState({ ...this.state})
   }
 
 
   render() {
+    const {title, desc, size, agreed} = this.state;
+    const {handleSubmit, handleChange, handleCheck} = this;
     return ( 
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <label htmlFor={this.prodIdTitle}>Title</label>
         <input 
           type="text" 
-          id={this.prodIdTitle} 
+          id={(this.prodIdTitle)} 
           name="title" 
-          value={this.state.title}
-          onChange={this.handleChange}
+          value={title}
+          onChange={handleChange}
         />
         <br/>
         <label htmlFor={this.prodIdDesc}>Description</label>
@@ -84,16 +87,16 @@ export class Form extends Component {
           type="text" 
           id={this.prodIdDesc} 
           name="desc"
-          value={this.state.desc}
-          onChange={this.handleChange}
+          value={desc}
+          onChange={handleChange}
         />
         <br/>
         <label htmlFor={this.prodIdSize}>Choose your size</label>
         <select 
           name="size"
           id={this.prodIdSize}
-          value={this.state.size}
-          onChange={this.handleChange}
+          value={size}
+          onChange={handleChange}
         >
           <option value="" disabled>...</option>
           <option value="s">s</option>
@@ -106,11 +109,11 @@ export class Form extends Component {
           type="checkbox" 
           name="agreed" 
           id={this.prodIdAgreed}
-          checked={this.state.agreed}
-          onChange={this.handleCheck} 
+          checked={agreed}
+          onChange={handleCheck} 
           />
         <br/>
-        <button type="submit" disabled={!this.state.agreed}>add</button>
+        <button type="submit" disabled={!agreed}>add</button>
       </form>
     )
   }

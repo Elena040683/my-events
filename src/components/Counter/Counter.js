@@ -1,4 +1,5 @@
 import s from './Counter.module.scss';
+
 export function Counter ({value, handleDecrement, handleIncrement}){
   return (
   <div className={s.counter}>
